@@ -15,19 +15,19 @@ public class ThirdPersonController : MonoBehaviour
     Vector3 verticalMovement;
     Vector3 horizontalMovement;
 
-    GameObject camera;
-    CameraLogic cameraLogic;
+    //GameObject camera;
+    //CameraLogic cameraLogic;
 
 
     // Start is called before the first frame update
     void Start()
     {
         characterController = GetComponent<CharacterController>();
-        camera = Camera.main.gameObject;
-        if(camera)
-        {
-            cameraLogic = camera.GetComponent<CameraLogic>();
-        }
+        //camera = Camera.main.gameObject;
+        //if(camera)
+        //{
+        //    cameraLogic = camera.GetComponent<CameraLogic>();
+        //}
     }
 
     // Update is called once per frame
@@ -41,10 +41,10 @@ public class ThirdPersonController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if(cameraLogic && (Mathf.Abs(horizontalInput)>0.1f || Mathf.Abs(verticalInput) > 0.1f))
-        {
-            transform.forward = cameraLogic.GetForwardVector();
-        }
+        //if(cameraLogic && (Mathf.Abs(horizontalInput)>0.1f || Mathf.Abs(verticalInput) > 0.1f))
+        //{
+        //    transform.forward = cameraLogic.GetForwardVector();
+        //}
 
         verticalMovement = transform.forward * verticalInput * movementSpeed * Time.deltaTime;
         horizontalMovement = transform.right * horizontalInput * movementSpeed * Time.deltaTime;
