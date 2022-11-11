@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using StarterAssets;
 
 public class SpiderShooter : MonoBehaviour
 {
@@ -20,12 +21,16 @@ public class SpiderShooter : MonoBehaviour
     public Transform Mouth;
     public GameObject playerCharacter;
 
+    private CharacterController characterController;
+    private ThirdPersonController thirdcontroller;
 
     // Start is called before the first frame update
     void Start()
     {
         spiderLine = GetComponent<LineRenderer>(); //get access to LineRenderer
         spiderLine.enabled = false;
+        characterController = playerCharacter.GetComponentInChildren<CharacterController>();
+        thirdcontroller= playerCharacter.GetComponentInChildren<ThirdPersonController>();
     }
 
     // Update is called once per frame
@@ -39,6 +44,7 @@ public class SpiderShooter : MonoBehaviour
         {
             EndGrabbing();
         }
+
     }
 
     public void StartGrabbing()  //start grapple method
@@ -66,10 +72,17 @@ public class SpiderShooter : MonoBehaviour
             {
                 //Debug.Log("I grab it!");
                 grabableObject = hitInfo.collider.transform;
-                grabableObject.position = Vector3.Lerp(grabableObject.position, shootPoint.position, Time.deltaTime);
-                
+                // grabableObject.position = Vector3.Lerp(grabableObject.position, shootPoint.position, Time.deltaTime);
 
-                //playerCharacter.transform.position = Vector3.Lerp(playerCharacter.transform.position, grabableObject.position, Time.deltaTime);
+                Debug.Log(grabableObject);
+
+                thirdcontroller.Gravity = 0;
+
+                Vector3 direction = characterController.transform.position - grabableObject.position;
+                direction = -direction.normalized;
+                characterController.Move(direction*Time.deltaTime*0.5f);
+
+                    // playerCharacter.transform.position = Vector3.Lerp(playerCharacter.transform.position, grabableObject.position, Time.deltaTime);
                 //Debug.Log(playerCharacter.transform.position);
 
 
@@ -93,7 +106,9 @@ public class SpiderShooter : MonoBehaviour
     {
         spiderLine.enabled = false;
 
-        grabableObject=null;
+        //thirdcontroller.Gravity = -15;
+
+        grabableObject =null;
     }
 
 }
