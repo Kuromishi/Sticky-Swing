@@ -9,10 +9,7 @@ EditorBuildSettings:
     path: Assets/Scenes/Start Scene.unity
     guid: 9fc0d4010bbf28b4594072e72b8655ab
   - enabled: 1
-    path: Assets/Scenes/Gym.unity
+    path: Assets/Scenes/Level.unity
     guid: d7ef038b290a1394b99cd14e033ecd11
-  - enabled: 1
-    path: Assets/Scenes/End Menu.unity
-    guid: 5f3419c4514e84e428578b748ab02a99
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: 9e7be553448fa2546aea5752021cbcf7, type: 2}

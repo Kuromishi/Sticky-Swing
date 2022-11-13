@@ -6,7 +6,7 @@ TagManager:
   tags:
   - CinemachineTarget
   - Grabable
-  - RedKey
+  - Absorbable
   layers:
   - Default
   - TransparentFX

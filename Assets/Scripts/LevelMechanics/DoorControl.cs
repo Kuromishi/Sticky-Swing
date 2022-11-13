@@ -7,6 +7,7 @@ public class DoorControl : MonoBehaviour
 
     private Animator anim_door;
 
+    [Header("KeyDetect")]
     public RedButtonDetect redKeyDetect;
     public BlueButtonDetect blueKeyDetect;
     public GreenButtonDetect greenKeyDetect;

@@ -13,8 +13,8 @@ public class CameraLogic : MonoBehaviour
     private float rotationX;
     private float rotationY;
 
-    private float minRotationX = -5f;
-    private float maxRotationX = 2f;
+    const float minRotationX = -5f;
+    const float maxRotationX = 2f;
 
     // Start is called before the first frame update
     void Start()
@@ -28,7 +28,7 @@ public class CameraLogic : MonoBehaviour
         cameraTarget = playerCharacter.transform.position;
         cameraTarget.y += cameraTargetOffect; //the height, change in y axis
 
-        if(Input.GetButton("Fire2"))
+        if(Input.GetMouseButton(1))
         {
             rotationY += Input.GetAxis("Mouse X");
             rotationX -= Input.GetAxis("Mouse Y");

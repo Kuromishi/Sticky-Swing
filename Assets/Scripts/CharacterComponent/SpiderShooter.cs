@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using StarterAssets;
+using UnityEngine.UI;
 
 public class SpiderShooter : MonoBehaviour
 {
@@ -21,24 +22,39 @@ public class SpiderShooter : MonoBehaviour
     public Transform Mouth;
     public GameObject playerCharacter;
 
-    private CharacterController characterController;
-    private ThirdPersonController thirdcontroller;
+    private Rigidbody playerRigidbody;
+
+    //private CharacterController characterController;
+    //private ThirdPersonController thirdcontroller;
+
+    [Header("Piggy Counting")]
+    public Text piggyRemain;
+    public PiggyTrigger piggyTigger;
 
     // Start is called before the first frame update
     void Start()
     {
         spiderLine = GetComponent<LineRenderer>(); //get access to LineRenderer
         spiderLine.enabled = false;
-        characterController = playerCharacter.GetComponentInChildren<CharacterController>();
-        thirdcontroller= playerCharacter.GetComponentInChildren<ThirdPersonController>();
+        //characterController = playerCharacter.GetComponentInChildren<CharacterController>();
+        //thirdcontroller= playerCharacter.GetComponentInChildren<ThirdPersonController>();
+
+        playerRigidbody = playerCharacter.GetComponent<Rigidbody>();
+        playerRigidbody.useGravity = true;
+
+        Time.timeScale = 1;
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetMouseButton(0))
+        piggyRemain.text = (3 - piggyTigger.piggyNum).ToString();
+
+        if (Input.GetMouseButton(0))
         {
             StartGrabbing();
+            
         }
         else 
         {
@@ -76,14 +92,24 @@ public class SpiderShooter : MonoBehaviour
 
                 Debug.Log(grabableObject);
 
-                thirdcontroller.Gravity = 0;
 
-                Vector3 direction = characterController.transform.position - grabableObject.position;
-                direction = -direction.normalized;
-                characterController.Move(direction*Time.deltaTime*0.5f);
+                //Vector3 direction = characterController.transform.position - grabableObject.position;
+                //direction = -direction.normalized;
+                //characterController.Move(direction*Time.deltaTime*0.5f);
 
-                    // playerCharacter.transform.position = Vector3.Lerp(playerCharacter.transform.position, grabableObject.position, Time.deltaTime);
-                //Debug.Log(playerCharacter.transform.position);
+                playerRigidbody.useGravity = false;
+                playerCharacter.transform.position = Vector3.Lerp(playerCharacter.transform.position, grabableObject.position, Time.deltaTime);
+                Debug.Log(playerCharacter.transform.position);
+
+
+            }
+
+            if (hitInfo.collider.gameObject.tag == "Absorbable")
+            {
+                grabableObject = hitInfo.collider.transform;
+                grabableObject.position = Vector3.Lerp(grabableObject.position, shootPoint.position, Time.deltaTime);
+
+               // Debug.Log(grabableObject);
 
 
             }
@@ -106,9 +132,12 @@ public class SpiderShooter : MonoBehaviour
     {
         spiderLine.enabled = false;
 
+        playerRigidbody.useGravity = true;
         //thirdcontroller.Gravity = -15;
 
         grabableObject =null;
     }
+
+
 
 }

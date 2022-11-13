@@ -11,12 +11,9 @@ public class EnemyController : MonoBehaviour
     public float rotateSpeed = 180f;
 
     //EnemyState
-    private bool isChasingPlayer;
     private bool isRotating;
 
     private Vector3 targetPos;
-    private Transform targetTransform;
-    private SpiderShooter targetPlayer;
 
     private int waypointIndex = 0;
 
@@ -28,21 +25,7 @@ public class EnemyController : MonoBehaviour
     private void Update()
     {
 
-        if (isChasingPlayer && !isRotating)
-        {
-            transform.position = Vector3.MoveTowards(transform.position, targetPos, chaseSpeed * Time.deltaTime);
-
-            if (Mathf.Abs(Vector3.Distance(transform.position, targetPos)) <= 0.5f)
-            {
-                targetPos = targetTransform.position;
-                targetPos += (targetPos - transform.position).normalized;
-
-                StartCoroutine(RotateToTarget());
-                // transform.LookAt(targetPos);
-            }
-        }
-
-        if (!isChasingPlayer && !isRotating)
+        if (!isRotating)
         {
             if (targetPos != enemyWaypoint.GetWaypointPosition(waypointIndex))
             {
@@ -65,14 +48,6 @@ public class EnemyController : MonoBehaviour
     }
 
 
-    public void FindPlayer(SpiderShooter playerCharacter)
-    {
-        targetPlayer = playerCharacter;
-        targetTransform = playerCharacter.transform;
-        targetPos = targetTransform.position;
-        targetPos += (targetPos - transform.position).normalized;
-        isChasingPlayer = true;
-    }
 
     private IEnumerator RotateToTarget()   //Coroutines
     {
