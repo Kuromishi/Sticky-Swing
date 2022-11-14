@@ -14,7 +14,7 @@ public class EnemyDetectArea : MonoBehaviour
         {
             //Debug.Log("Found!");
 
-            endTrigger.GameOver();
+            endTrigger.LoseGame();
         }
     }
 }

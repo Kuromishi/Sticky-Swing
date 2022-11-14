@@ -31,6 +31,18 @@ public class SpiderShooter : MonoBehaviour
     public Text piggyRemain;
     public PiggyTrigger piggyTigger;
 
+
+
+    AudioSource piggySpark;
+
+    [Header("Audio")]
+    public AudioClip piggySparkClip;
+    public AudioClip swingClip;
+
+    [Header("Particles")]
+    public ParticleSystem Particle;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -44,6 +56,7 @@ public class SpiderShooter : MonoBehaviour
 
         Time.timeScale = 1;
 
+        piggySpark = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -74,10 +87,16 @@ public class SpiderShooter : MonoBehaviour
         {
             grabbingPoint = hitInfo.point;      //save the transform where i grappleed
 
+            piggySpark.clip = swingClip;
+            piggySpark.Play();
+
+            Particle.transform.position = grabbingPoint;
+            Particle.Play();
+
             //spiderLine.SetPosition(1, swingPoint);
             //Mouth.LookAt(hitInfo.point);
 
-            
+
             //currentGrabbingPoint = shootPoint.position;
             //currentGrabbingPoint = Vector3.Lerp(currentGrabbingPoint, grabbingPoint, Time.deltaTime * 8f);
 
@@ -90,7 +109,7 @@ public class SpiderShooter : MonoBehaviour
                 grabableObject = hitInfo.collider.transform;
                 // grabableObject.position = Vector3.Lerp(grabableObject.position, shootPoint.position, Time.deltaTime);
 
-                Debug.Log(grabableObject);
+                //Debug.Log(grabableObject);
 
 
                 //Vector3 direction = characterController.transform.position - grabableObject.position;
@@ -99,7 +118,7 @@ public class SpiderShooter : MonoBehaviour
 
                 playerRigidbody.useGravity = false;
                 playerCharacter.transform.position = Vector3.Lerp(playerCharacter.transform.position, grabableObject.position, Time.deltaTime);
-                Debug.Log(playerCharacter.transform.position);
+                //Debug.Log(playerCharacter.transform.position);
 
 
             }
@@ -109,8 +128,13 @@ public class SpiderShooter : MonoBehaviour
                 grabableObject = hitInfo.collider.transform;
                 grabableObject.position = Vector3.Lerp(grabableObject.position, shootPoint.position, Time.deltaTime);
 
-               // Debug.Log(grabableObject);
+                // Debug.Log(grabableObject);
 
+                if (hitInfo.collider.gameObject.GetComponent<piggy>() != null)
+                {
+                    piggySpark.clip = piggySparkClip;
+                    piggySpark.Play();
+                }
 
             }
 
@@ -130,12 +154,16 @@ public class SpiderShooter : MonoBehaviour
 
     public void EndGrabbing()
     {
+        
         spiderLine.enabled = false;
+        Particle.Stop();
 
         playerRigidbody.useGravity = true;
         //thirdcontroller.Gravity = -15;
 
         grabableObject =null;
+
+
     }
 
 

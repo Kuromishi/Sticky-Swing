@@ -14,12 +14,12 @@ public class BatteryLogic : MonoBehaviour
 
     private void Update()
     {
-        reloadTimer -= Time.deltaTime;
+        reloadTimer -= Time.deltaTime;  
 
-        if (reloadTimer > 0) return;
+        if (reloadTimer > 0) return;    //if the reload time hasn't become 0, then don't execute the codes below
 
         
-        Instantiate(bulletPrefab, bulletPoint.position, bulletPoint.rotation);
-        reloadTimer = reloadTime;
+        Instantiate(bulletPrefab, bulletPoint.position, bulletPoint.rotation); //instantiate the bullet
+        reloadTimer = reloadTime;  // reset the reload time
     }
 }

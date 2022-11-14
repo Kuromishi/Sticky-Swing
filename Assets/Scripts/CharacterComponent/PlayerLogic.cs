@@ -23,7 +23,6 @@ public class PlayerLogic : MonoBehaviour
     private Rigidbody rigidBody;
 
 
-
     private void Awake()
     {
         rigidBody = GetComponent<Rigidbody>();

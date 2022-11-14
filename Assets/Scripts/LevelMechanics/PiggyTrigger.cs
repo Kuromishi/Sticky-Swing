@@ -9,10 +9,13 @@ public class PiggyTrigger : MonoBehaviour
     public int piggyNum = 0;
 
 
+    AudioSource piggyWinAudio;
+    public AudioClip piggyWinClip;
+
 
     private void Start()
     {
-
+        piggyWinAudio = GetComponent<AudioSource>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -26,7 +29,9 @@ public class PiggyTrigger : MonoBehaviour
         }
         if(piggyNum == 3)
         {
-            endTrigger.GameOver();
+            piggyWinAudio.clip = piggyWinClip;
+            piggyWinAudio.Play();
+            endTrigger.WinGame();
         }
     }
 }

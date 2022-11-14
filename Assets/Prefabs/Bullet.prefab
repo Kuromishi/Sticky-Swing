@@ -129,4 +129,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bulletSpeed: 0.7
   bulletForce: 0.7
-  gameOverImage: {fileID: 0}

@@ -18,7 +18,7 @@ public class Bullet : MonoBehaviour
 
     private void Update()
     {
-        rb.AddForce(Vector3.right * bulletForce, ForceMode.Impulse);
+        rb.AddForce(-Vector3.forward * bulletForce, ForceMode.Impulse);
         Destroy(gameObject,100);
     }
     private void OnCollisionEnter(Collision collision)
