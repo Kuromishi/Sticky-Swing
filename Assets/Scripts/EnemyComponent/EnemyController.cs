@@ -25,11 +25,11 @@ public class EnemyController : MonoBehaviour
     private void Update()
     {
 
-        if (!isRotating)
+        if (!isRotating) //If it's not rotating. The emeny will rotate only when it gets the waypoint
         {
             if (targetPos != enemyWaypoint.GetWaypointPosition(waypointIndex))
             {
-                StartCoroutine(RotateToTarget());
+                StartCoroutine(RotateToTarget());  // get to the waypoint
             }
 
             targetPos = enemyWaypoint.GetWaypointPosition(waypointIndex);
@@ -38,7 +38,7 @@ public class EnemyController : MonoBehaviour
 
             if (Mathf.Abs(Vector3.Distance(transform.position, targetPos)) <= 0.5f)
             {
-                waypointIndex = enemyWaypoint.GetNextWaypointIndex(waypointIndex);
+                waypointIndex = enemyWaypoint.GetNextWaypointIndex(waypointIndex);   //get next point
             }
             // else
             // {
@@ -47,7 +47,8 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-
+    //Reference:Detailed explanation of principle and usage of Coroutine
+    //https://blog.csdn.net/xinzhilinger/article/details/116240688
 
     private IEnumerator RotateToTarget()   //Coroutines
     {
@@ -57,9 +58,10 @@ public class EnemyController : MonoBehaviour
         {
             t += Time.deltaTime;
 
+            //calculate the cosine degree of the two vectors
             if (Vector3.Dot(targetPos - transform.position, -transform.right) <= 0)
             {
-                transform.Rotate(0, 180f * Time.deltaTime, 0);
+                transform.Rotate(0, 180f * Time.deltaTime, 0);    //make the enemy rotate
             }
             else
             {

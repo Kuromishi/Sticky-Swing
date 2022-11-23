@@ -7,8 +7,8 @@ public class CameraLogic : MonoBehaviour
     Vector3 cameraTarget;
     private GameObject playerCharacter;
 
-    private float cameraTargetOffect = 1.5f;
-    private float distanceZ = 6.0f;   //distance in the Z axis
+    private float cameraTargetOffect = 1.5f; //camera height, for the y axis
+    private float distanceZ = 6.0f;   //distance in the Z axis away from the player
 
     private float rotationX;
     private float rotationY;
@@ -16,13 +16,12 @@ public class CameraLogic : MonoBehaviour
     const float minRotationX = -5f;
     const float maxRotationX = 2f;
 
-    // Start is called before the first frame update
+
     void Start()
     {
         playerCharacter = GameObject.FindGameObjectWithTag("Player");  //find the player
     }
 
-    // Update is called once per frame
     void Update()
     {
         cameraTarget = playerCharacter.transform.position;
@@ -31,18 +30,18 @@ public class CameraLogic : MonoBehaviour
         if(Input.GetMouseButton(1))
         {
             rotationY += Input.GetAxis("Mouse X");
-            rotationX -= Input.GetAxis("Mouse Y");
-            rotationX = Mathf.Clamp(rotationX, minRotationX, maxRotationX);
+            rotationX -= Input.GetAxis("Mouse Y"); //up and down
+            rotationX = Mathf.Clamp(rotationX, minRotationX, maxRotationX); //limit the camera up and down
 
         }
     }
 
     private void LateUpdate()  //after the render is done, want the better effect for camera
     {
-        Quaternion cameraRotation = Quaternion.Euler(rotationX, rotationY, 0);
+        Quaternion cameraRotation = Quaternion.Euler(rotationX, rotationY, 0); 
 
         Vector3 cameraOffect = new Vector3(0, 0, -distanceZ);
-        transform.position = cameraTarget + cameraRotation * cameraOffect;
+        transform.position = cameraTarget + cameraRotation * cameraOffect; //set the position of the camera
 
         transform.LookAt(cameraTarget); //make the camera always faces the player
     }

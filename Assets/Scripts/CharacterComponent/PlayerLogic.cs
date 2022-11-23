@@ -41,7 +41,7 @@ public class PlayerLogic : MonoBehaviour
     void Update()
     {
         //move the transform
-        horizontalInput = Input.GetAxis("Horizontal");
+        horizontalInput = Input.GetAxis("Horizontal");  //get the keyboard input with getaxis
         verticalInput = Input.GetAxis("Vertical");
 
         movementInput = new Vector3(horizontalInput, 0, verticalInput);
@@ -51,13 +51,14 @@ public class PlayerLogic : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (cameraLogic && (Mathf.Abs(horizontalInput) > 0.1f || Mathf.Abs(verticalInput) > 0.1f))
+        if (cameraLogic && (Mathf.Abs(horizontalInput) > 0.1f || Mathf.Abs(verticalInput) > 0.1f)) 
         {
+            //whatever the input, movetowards the camera position
             transform.forward = cameraLogic.GetForwardVector();
         }
 
-        verticalMovement = transform.forward * verticalInput * movementSpeed * Time.deltaTime;
-        horizontalMovement = transform.right * horizontalInput * movementSpeed * Time.deltaTime;
+        //verticalMovement = transform.forward * verticalInput * movementSpeed * Time.deltaTime;
+        //horizontalMovement = transform.right * horizontalInput * movementSpeed * Time.deltaTime;
 
         rigidBody.MovePosition(transform.position + (processedInput * movementSpeed * Time.fixedDeltaTime));
 
